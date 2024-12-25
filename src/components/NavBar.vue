@@ -3,7 +3,7 @@ import { useAuthenticationStore } from "@/stores/authStore";
 import { RouterLink, useRoute, useRouter } from "vue-router";
 const route = useRoute();
 
-const rootRoutes = ["home", "student_space", "login", "scanner_qr"];
+const rootRoutes = ["home", "student_space", "login", "scanner_qr", "settings"];
 const router = useRouter();
 
 const authStore = useAuthenticationStore();
@@ -17,6 +17,7 @@ const logout = () => {
 <template>
     <nav
         class="navbar navbar-expand-md navbar-light bg-light"
+        style="height: 4rem"
         v-if="rootRoutes.includes(route.name as string)"
     >
         <div class="container">
@@ -27,10 +28,8 @@ const logout = () => {
             >
                 ExamAuth
             </RouterLink>
-            <details>
+            <details class="dropdown">
                 <summary>Menu</summary>
-            </details>
-            <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                     <li class="nav-item">
                         <RouterLink class="nav-link" :to="{ name: 'home' }">
@@ -48,7 +47,8 @@ const logout = () => {
                     <li class="nav-item">
                         <RouterLink
                             class="nav-link"
-                            :to="{ name: 'manager_space' }"
+                            :to="{ name: 'home' }"
+                            @click="logout()"
                         >
                             Espace gestionnaire
                         </RouterLink>
@@ -58,8 +58,12 @@ const logout = () => {
                             Se déconnecter
                         </a>
                     </li>
+                    <li><hr /></li>
+                    <li>
+                        <RouterLink to="/settings"> Paramètres </RouterLink>
+                    </li>
                 </ul>
-            </div>
+            </details>
         </div>
     </nav>
 </template>

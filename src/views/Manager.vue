@@ -42,11 +42,14 @@
                             Dérogations
                         </RouterLink>
                     </li>
-                    <li><a href="#">--------</a></li>
+                    <li><hr /></li>
                     <li>
                         <RouterLink :to="{ name: 'scanner_qr' }">
                             Scan QR
                         </RouterLink>
+                    </li>
+                    <li>
+                        <RouterLink to="/settings"> Paramètres </RouterLink>
                     </li>
                     <li>
                         <span

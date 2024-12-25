@@ -63,7 +63,7 @@ const apiStore = useApiStore();
 
 onMounted(async () => {
     const id = Number(route.params.id);
-    domaine.value = await getDomaineById(id);
+    domaine.value = await getDomaineById(apiStore.api + "/domaines", id);
     console.log(domaine.value);
 });
 
@@ -75,13 +75,19 @@ const submit = async () => {
             `${apiStore.api}/domaine/${domaine.value?.id_domaine}/filieres`,
             params
         );
-        domaine.value = await getDomaineById(Number(route.params.id));
+        domaine.value = await getDomaineById(
+            apiStore.api + "/domaines",
+            Number(route.params.id)
+        );
         filiere.value = "";
     } catch (error) {}
 };
 
 const removeFiliere = async (id: number) => {
-    const result = await deleteFiliere(id);
-    domaine.value = await getDomaineById(Number(route.params.id));
+    const result = await deleteFiliere(apiStore.api + "/filieres", id);
+    domaine.value = await getDomaineById(
+        apiStore.api + "/domaines",
+        Number(route.params.id)
+    );
 };
 </script>

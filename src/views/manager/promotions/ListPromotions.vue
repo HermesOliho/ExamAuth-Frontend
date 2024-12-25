@@ -11,7 +11,7 @@
         <table v-if="promotions.length > 0">
             <thead>
                 <tr>
-                    <th>Nom du Promotion</th>
+                    <th>Nom de la Promotion</th>
                     <th style="text-align: end">Actions</th>
                 </tr>
             </thead>
@@ -65,16 +65,18 @@
 <script setup lang="ts">
 import type { Promotion } from "@/models";
 import { deletePromotion, getPromotions } from "@/services/promotionService";
+import { useApiStore } from "@/stores/apiStore";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const promotions = ref<Promotion[]>([]);
 const router = useRouter();
+const apiStore = useApiStore();
 
 // Fonction pour charger la liste des promotions
 const loadPromotions = async () => {
     try {
-        const data = await getPromotions();
+        const data = await getPromotions(`${apiStore.api}/promotions`);
         promotions.value = data;
     } catch (err) {
         console.error("Erreur lors du chargement des promotions:", err);
@@ -85,7 +87,7 @@ const loadPromotions = async () => {
 const removePromotion = async (id: number) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce promotion ?")) {
         try {
-            await deletePromotion(id);
+            await deletePromotion(`${apiStore.api}/promotions`, id);
             promotions.value = promotions.value.filter(
                 (promotion) => promotion.id_promotion !== id
             );
@@ -121,18 +123,5 @@ h1 {
 
 .add-button:hover {
     background-color: #45a049;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th,
-td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 </style>

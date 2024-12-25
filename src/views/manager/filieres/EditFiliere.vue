@@ -39,6 +39,7 @@ import {
     getFiliereById,
     updateFiliere,
 } from "@/services/filiereService";
+import { useApiStore } from "@/stores/apiStore";
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -48,13 +49,17 @@ const error = ref(null);
 
 const route = useRoute();
 const router = useRouter();
+const apiStore = useApiStore();
 
 // Charger un filiere spécifique si l'on est en mode modification
 const loadFiliere = async () => {
     const filiereId = route.params.id; // On récupère l'ID du filiere depuis les paramètres de la route
     if (filiereId) {
         try {
-            const data = await getFiliereById(filiereId);
+            const data = await getFiliereById(
+                `${apiStore.api}/filieres`,
+                filiereId
+            );
             filiere.value = { nom_filiere: data.nom_filiere };
             editMode.value = true;
         } catch (err) {
@@ -71,10 +76,14 @@ const saveFiliere = async () => {
             const params = new URLSearchParams();
             params.set("nom", filiere.value);
             // Mise à jour d'un filiere existant
-            await updateFiliere(route.params.id, params);
+            await updateFiliere(
+                `${apiStore.api}/filieres`,
+                route.params.id,
+                params
+            );
         } else {
             // Ajout d'un nouveau filiere
-            await createFiliere(filiere.value);
+            await createFiliere(`${apiStore.api}/filieres`, filiere.value);
         }
 
         // Rediriger vers la page liste des filieres après l'opération
@@ -99,22 +108,9 @@ form {
     max-width: 500px;
     margin: auto;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc41;
     border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    background-color: #2527332a;
 }
 
 button {

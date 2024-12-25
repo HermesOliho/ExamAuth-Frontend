@@ -61,7 +61,7 @@ const apiStore = useApiStore();
 
 onMounted(async () => {
     const id = Number(route.params.id);
-    mention.value = await getMentionById(id);
+    mention.value = await getMentionById(`${apiStore.api}/mentions`, id);
     console.log(mention.value);
 });
 
@@ -73,13 +73,19 @@ const submit = async () => {
             `${apiStore.api}/mention/${mention.value?.id_mention}/promotions`,
             params
         );
-        mention.value = await getMentionById(Number(route.params.id));
+        mention.value = await getMentionById(
+            `${apiStore.api}/mentions`,
+            Number(route.params.id)
+        );
         promotion.value = "";
     } catch (error) {}
 };
 
 const removePromotion = async (id: number) => {
-    const result = await deletePromotion(id);
-    mention.value = await getMentionById(Number(route.params.id));
+    const result = await deletePromotion(`${apiStore.api}/mentions`, id);
+    mention.value = await getMentionById(
+        `${apiStore.api}/mentions`,
+        Number(route.params.id)
+    );
 };
 </script>

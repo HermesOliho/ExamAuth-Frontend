@@ -40,25 +40,26 @@
                         </p>
                     </td>
                     <td>{{ etudiant.sexe }}</td>
-                    <td style="text-align: end" class="table-actions">
-                        <router-link
-                            role="button"
-                            :to="{
-                                name: 'ajouter_paiement',
-                            }"
-                        >
-                            <button>+ paiement</button>
-                        </router-link>
-                        <button
-                            class="secondary"
-                            @click="
-                                etudiant.id_etudiant
-                                    ? removeEtudiant(etudiant.id_etudiant)
-                                    : null
-                            "
-                        >
-                            + dérogation
-                        </button>
+                    <td style="text-align: end">
+                        <div class="table-actions">
+                            <router-link
+                                role="button"
+                                :to="{
+                                    name: 'ajouter_paiement',
+                                }"
+                            >
+                                + paiement
+                            </router-link>
+                            <router-link
+                                class="secondary"
+                                role="button"
+                                :to="{
+                                    name: 'ajouter_derogation',
+                                }"
+                            >
+                                + dérogation
+                            </router-link>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -70,19 +71,20 @@
 </template>
 
 <script setup lang="ts">
-import { apiBase } from "@/api/infos";
 import type { Etudiant } from "@/models";
 import { deleteEtudiant, getEtudiants } from "@/services/etudiantService";
+import { useApiStore } from "@/stores/apiStore";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const etudiants = ref<Etudiant[]>([]);
 const router = useRouter();
+const apiStore = useApiStore();
 
 // Fonction pour charger la liste des etudiants
 const loadEtudiants = async () => {
     try {
-        const data = await getEtudiants();
+        const data = await getEtudiants(`${apiStore.api}/etudiants`);
         etudiants.value = data;
     } catch (err) {
         console.error("Erreur lors du chargement des etudiants:", err);
@@ -93,7 +95,7 @@ const loadEtudiants = async () => {
 const removeEtudiant = async (id: number) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce etudiant ?")) {
         try {
-            await deleteEtudiant(id);
+            await deleteEtudiant(`${apiStore.api}/etudiants`, id);
             etudiants.value = etudiants.value.filter(
                 (etudiant) => etudiant.id_etudiant !== id
             );
@@ -129,18 +131,5 @@ h1 {
 
 .add-button:hover {
     background-color: #45a049;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th,
-td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 </style>

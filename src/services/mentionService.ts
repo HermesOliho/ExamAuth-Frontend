@@ -1,11 +1,5 @@
-import { pinia } from "@/main";
 import type { Mention } from "@/models";
-import { useApiStore } from "@/stores/apiStore";
 import axios from "axios";
-
-const apiStore = useApiStore(pinia);
-
-const endpoint = `${apiStore.api}/mentions`; // Remplacez par l'URL correcte
 
 export const getMentions = async (endpoint: string) => {
     const response = await axios.get(endpoint);

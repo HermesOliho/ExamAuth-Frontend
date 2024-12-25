@@ -141,7 +141,7 @@
 import { formatDate } from "@/functions/string";
 import type { Etudiant, Promotion } from "@/models";
 import { deleteEtudiant, getEtudiantById } from "@/services/etudiantService";
-import { deletePromotion, getPromotionById } from "@/services/promotionService";
+import { getPromotionById } from "@/services/promotionService";
 import { useApiStore } from "@/stores/apiStore";
 import axios from "axios";
 import { onMounted, ref } from "vue";
@@ -166,7 +166,7 @@ const imageEtudiant = ref<any>("");
 
 onMounted(async () => {
     const id = Number(route.params.id);
-    etudiant.value = await getEtudiantById(id);
+    etudiant.value = await getEtudiantById(`${apiStore.api}/etudiants`, id);
     console.log(promotion.value);
 });
 
@@ -182,6 +182,7 @@ const submit = async () => {
                 data
             );
             promotion.value = await getPromotionById(
+                `${apiStore.api}/promotions`,
                 promotion.value?.id_promotion as number
             );
             form.reset();
@@ -195,7 +196,7 @@ const chargerImage = (event: Event) => {
 };
 
 const removeEtudiant = async (id: number) => {
-    const result = await deleteEtudiant(id);
+    const result = await deleteEtudiant(`${apiStore.api}/etudiants`, id);
     router.push({ name: "liste_promotions" });
 };
 </script>

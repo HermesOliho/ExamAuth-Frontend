@@ -19,6 +19,5 @@ app.use(router);
 app.use(pinia);
 
 app.mount("#app");
-console.log(pinia);
 
 export { pinia };

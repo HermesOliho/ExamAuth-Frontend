@@ -45,6 +45,7 @@ import QRCodeGenerator from "@/components/QRCodeGenerator.vue";
 import { formatDate, formatLiteral } from "@/functions/string";
 import type { Exam, Etudiant } from "@/models";
 import { getStudentByMatricule } from "@/services/studentService";
+import { useApiStore } from "@/stores/apiStore";
 import { useAuthenticationStore } from "@/stores/authStore";
 import type { Ref } from "vue";
 import { computed, onMounted, ref } from "vue";
@@ -58,6 +59,7 @@ const exams: Ref<Exam[] | null> = ref(null);
 const route = useRoute();
 const authStore = useAuthenticationStore();
 const qrCodeData = ref("");
+const apiStore = useApiStore();
 
 const buildqrData = () => {
     qrCodeData.value = "";
@@ -69,7 +71,10 @@ const buildqrData = () => {
 const submit = async () => {
     try {
         status.value = "pending";
-        student.value = await getStudentByMatricule(matricule.value);
+        student.value = await getStudentByMatricule(
+            `${apiStore.api}`,
+            matricule.value
+        );
         if (student.value) {
             buildqrData();
             status.value = "loaded";

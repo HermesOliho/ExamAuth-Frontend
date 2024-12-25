@@ -59,16 +59,18 @@
 <script setup lang="ts">
 import type { Domaine } from "@/models";
 import { deleteDomaine, getDomaines } from "@/services/domaineService";
+import { useApiStore } from "@/stores/apiStore";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const domaines = ref<Domaine[]>([]);
 const router = useRouter();
+const apiStore = useApiStore();
 
 // Fonction pour charger la liste des domaines
 const loadDomaines = async () => {
     try {
-        const data = await getDomaines();
+        const data = await getDomaines(`${apiStore.api}/domaines`);
         domaines.value = data;
     } catch (err) {
         console.error("Erreur lors du chargement des domaines:", err);
@@ -79,7 +81,7 @@ const loadDomaines = async () => {
 const removeDomaine = async (id: number) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce domaine ?")) {
         try {
-            await deleteDomaine(id);
+            await deleteDomaine(`${apiStore.api}/domaines`, id);
             domaines.value = domaines.value.filter(
                 (domaine) => domaine.id_domaine !== id
             );

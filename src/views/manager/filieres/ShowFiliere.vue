@@ -64,7 +64,7 @@ const apiStore = useApiStore();
 
 onMounted(async () => {
     const id = Number(route.params.id);
-    filiere.value = await getFiliereById(id);
+    filiere.value = await getFiliereById(`${apiStore.api}/filieres`, id);
     console.log(filiere.value);
 });
 
@@ -76,13 +76,19 @@ const submit = async () => {
             `${apiStore.api}/filiere/${filiere.value?.id_filiere}/mentions`,
             params
         );
-        filiere.value = await getFiliereById(Number(route.params.id));
+        filiere.value = await getFiliereById(
+            `${apiStore.api}/filieres`,
+            Number(route.params.id)
+        );
         mention.value = "";
     } catch (error) {}
 };
 
 const removeMention = async (id: number) => {
-    const result = await deleteMention(id);
-    filiere.value = await getFiliereById(Number(route.params.id));
+    const result = await deleteMention(`${apiStore.api}/mentions`, id);
+    filiere.value = await getFiliereById(
+        `${apiStore.api}/filieres`,
+        Number(route.params.id)
+    );
 };
 </script>

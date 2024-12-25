@@ -33,12 +33,13 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {
     createDomaine,
     getDomaineById,
     updateDomaine,
 } from "@/services/domaineService";
+import { useApiStore } from "@/stores/apiStore";
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -48,18 +49,22 @@ const error = ref(null);
 
 const route = useRoute();
 const router = useRouter();
+const apiStore = useApiStore();
 
 // Charger un domaine spécifique si l'on est en mode modification
 const loadDomaine = async () => {
-    const domaineId = route.params.id; // On récupère l'ID du domaine depuis les paramètres de la route
+    const domaineId = Number(route.params.id); // On récupère l'ID du domaine depuis les paramètres de la route
     if (domaineId) {
         try {
-            const data = await getDomaineById(domaineId);
+            const data = await getDomaineById(
+                apiStore.api + "/domaines",
+                domaineId
+            );
             domaine.value = { nom_domaine: data.nom_domaine };
             editMode.value = true;
         } catch (err) {
-            error.value = "Erreur lors de la récupération du domaine";
-            console.error(err);
+            // error.value = "Erreur lors de la récupération du domaine";
+            console.error("Erreur lors de la récupération du domaine", err);
         }
     }
 };
@@ -69,17 +74,24 @@ const saveDomaine = async () => {
     try {
         if (editMode.value) {
             // Mise à jour d'un domaine existant
-            await updateDomaine(route.params.id, domaine.value);
+            await updateDomaine(
+                apiStore.api + "/domaines",
+                Number(route.params.id),
+                { ...domaine.value, id_domaine: 0 }
+            );
         } else {
             // Ajout d'un nouveau domaine
-            await createDomaine(domaine.value);
+            await createDomaine(apiStore.api + "/domaines", {
+                ...domaine.value,
+                id_domaine: 0,
+            });
         }
 
         // Rediriger vers la page liste des domaines après l'opération
         router.push({ name: "liste_domaines" });
     } catch (err) {
-        error.value = "Erreur lors de la sauvegarde du domaine";
-        console.error(err);
+        // error.value = "Erreur lors de la sauvegarde du domaine";
+        console.error("Erreur lors de la sauvegarde du domaine", err);
     }
 };
 
@@ -97,22 +109,9 @@ form {
     max-width: 500px;
     margin: auto;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc41;
     border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    background-color: #2527332a;
 }
 
 button {

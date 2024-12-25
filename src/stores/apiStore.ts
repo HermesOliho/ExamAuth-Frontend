@@ -5,9 +5,10 @@ export const useApiStore = defineStore(
     "api_store",
     () => {
         const serverUrl = ref("https://172.20.10.10:3000");
-        const apiUrl = ref(`${serverUrl}/api`);
+        const apiUrl = ref(`${serverUrl.value}/api`);
         const setServer = (newUrl: string) => {
             serverUrl.value = newUrl;
+            // apiUrl.value = `${newUrl}/api`;
         };
         return {
             server: serverUrl,

@@ -62,16 +62,18 @@
 <script setup lang="ts">
 import type { Filiere } from "@/models";
 import { deleteFiliere, getFilieres } from "@/services/filiereService";
+import { useApiStore } from "@/stores/apiStore";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const filieres = ref<Filiere[]>([]);
 const router = useRouter();
+const apiStore = useApiStore();
 
 // Fonction pour charger la liste des filieres
 const loadFilieres = async () => {
     try {
-        const data = await getFilieres();
+        const data = await getFilieres(`${apiStore.api}/filieres`);
         filieres.value = data;
     } catch (err) {
         console.error("Erreur lors du chargement des filieres:", err);
@@ -82,7 +84,7 @@ const loadFilieres = async () => {
 const removeFiliere = async (id: number) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce filiere ?")) {
         try {
-            await deleteFiliere(id);
+            await deleteFiliere(`${apiStore.api}/filieres`, id);
             filieres.value = filieres.value.filter(
                 (filiere) => filiere.id_filiere !== id
             );
@@ -121,15 +123,6 @@ h1 {
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
     margin-top: 20px;
-}
-
-th,
-td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 </style>

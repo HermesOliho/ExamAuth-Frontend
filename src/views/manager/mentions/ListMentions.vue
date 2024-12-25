@@ -62,16 +62,18 @@
 <script setup lang="ts">
 import type { Mention } from "@/models";
 import { deleteMention, getMentions } from "@/services/mentionService";
+import { useApiStore } from "@/stores/apiStore";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const mentions = ref<Mention[]>([]);
 const router = useRouter();
+const apiStore = useApiStore();
 
 // Fonction pour charger la liste des mentions
 const loadMentions = async () => {
     try {
-        const data = await getMentions();
+        const data = await getMentions(`${apiStore.api}/mentions`);
         mentions.value = data;
     } catch (err) {
         console.error("Erreur lors du chargement des mentions:", err);
@@ -82,7 +84,7 @@ const loadMentions = async () => {
 const removeMention = async (id: number) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce mention ?")) {
         try {
-            await deleteMention(id);
+            await deleteMention(`${apiStore.api}/mentions`, id);
             mentions.value = mentions.value.filter(
                 (mention) => mention.id_mention !== id
             );
