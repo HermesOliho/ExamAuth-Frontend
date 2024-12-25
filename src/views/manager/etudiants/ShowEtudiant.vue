@@ -173,18 +173,19 @@ onMounted(async () => {
 const submit = async () => {
     const form = <HTMLFormElement>document.getElementById("inscriptionForm");
     const data = new FormData(form);
+    console.log(Array.from(data));
     data.append("id_promotion", String(promotion.value?.id_promotion));
     data.append("image", imageEtudiant.value);
     if (form) {
         try {
             await axios.put(
                 `${apiStore.api}/etudiants/${etudiant.value.id_etudiant}`,
-                data
+                etudiant.value
             );
-            promotion.value = await getPromotionById(
-                `${apiStore.api}/promotions`,
-                promotion.value?.id_promotion as number
-            );
+            // promotion.value = await getPromotionById(
+            //     `${apiStore.api}/promotions`,
+            //     promotion.value?.id_promotion as number
+            // );
             form.reset();
         } catch (error) {}
     }
