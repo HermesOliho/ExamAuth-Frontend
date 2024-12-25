@@ -1,0 +1,89 @@
+.text-center {
+    text-align: center;
+}
+.text-end {
+    text-align: right;
+}
+/* ALertes */
+.alert {
+    width: 100%;
+    background-color: rgba(5, 85, 150, 0.35);
+    padding: 0.75rem;
+    border: 2px solid rgb(58, 141, 236);
+    border-radius: 0.25rem;
+}
+.alert-warning {
+    background-color: rgba(255, 166, 0, 0.226);
+    border-color: rgba(255, 166, 0, 0.603);
+}
+/* Dropdowns */
+/* Container for the dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Button for the dropdown */
+.dropdown-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Style for the dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Hover effects for the links */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change button background on hover */
+.dropdown:hover .dropdown-button {
+    background-color: #0056b3;
+}
+
+/* Pour les tableaux */
+.table-actions {
+    /* d-flex justify-content-end gap-2 */
+    display: flex;
+    justify-content: end;
+    gap: 0.5rem;
+}
+.table-actions button,
+.table-actions [role="button"] {
+    padding-block: 0.25rem;
+}
+
+/* ----- */
+.hwith-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
