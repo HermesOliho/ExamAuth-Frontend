@@ -48,18 +48,20 @@
 import { formatDate } from "@/functions/string";
 import type { Derogation } from "@/models";
 import { deleteDerogation, getDerogations } from "@/services/derogationService";
+import { useApiStore } from "@/stores/apiStore";
 import { onMounted, ref } from "vue";
 
 const derogations = ref<Derogation[]>([]);
+const apiStore = useApiStore();
 
 const removeDerogation = async (id: number) => {
     if (confirm("Voulez-vous vraiment supprimer ce derogation ?")) {
-        await deleteDerogation(id);
-        derogations.value = await getDerogations();
+        await deleteDerogation(`${apiStore.api}/derogations`, id);
+        derogations.value = await getDerogations(`${apiStore.api}/derogations`);
     }
 };
 
 onMounted(async () => {
-    derogations.value = await getDerogations();
+    derogations.value = await getDerogations(`${apiStore.api}/derogations`);
 });
 </script>

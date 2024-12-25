@@ -50,7 +50,7 @@ const id_etudiant = ref(0);
 const etudiants = ref<Etudiant[]>();
 
 onMounted(async () => {
-    etudiants.value = await getEtudiants();
+    etudiants.value = await getEtudiants(`${apiStore.api}/etudiants`);
 });
 
 const submit = async () => {

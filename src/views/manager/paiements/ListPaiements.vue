@@ -46,18 +46,20 @@
 import { formatDate } from "@/functions/string";
 import type { Paiement } from "@/models";
 import { deletePaiement, getPaiements } from "@/services/paiementService";
+import { useApiStore } from "@/stores/apiStore";
 import { onMounted, ref } from "vue";
 
 const paiements = ref<Paiement[]>([]);
+const apiStore = useApiStore();
 
 const removePaiement = async (id: number) => {
     if (confirm("Voulez-vous vraiment supprimer ce paiement ?")) {
-        await deletePaiement(id);
-        paiements.value = await getPaiements();
+        await deletePaiement(`${apiStore.api}/paiements`, id);
+        paiements.value = await getPaiements(`${apiStore.api}/paiements`);
     }
 };
 
 onMounted(async () => {
-    paiements.value = await getPaiements();
+    paiements.value = await getPaiements(`${apiStore.api}/paiements`);
 });
 </script>

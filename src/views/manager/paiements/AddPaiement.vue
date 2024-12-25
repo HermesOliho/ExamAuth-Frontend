@@ -3,7 +3,12 @@
     <form action="" @submit.prevent="submit" id="addPaiement">
         <label for="etudiant">
             Etudiant
-            <select name="etudiant" id="etudiant" v-model="id_etudiant">
+            <select
+                name="etudiant"
+                id="etudiant"
+                v-model="id_etudiant"
+                placeholder="Sélectionner un étudiant"
+            >
                 <option
                     :value="etudiant.id_etudiant"
                     v-for="etudiant in etudiants"
@@ -50,7 +55,7 @@ const etudiants = ref<Etudiant[]>();
 const apiStore = useApiStore();
 
 onMounted(async () => {
-    etudiants.value = await getEtudiants();
+    etudiants.value = await getEtudiants(`${apiStore.api}/etudiants`);
 });
 
 const submit = async () => {
