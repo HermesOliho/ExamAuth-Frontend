@@ -1,32 +1,31 @@
 import type { Etudiant } from "@/models";
-import { useApiStore } from "@/stores/apiStore";
 import axios from "axios";
 
-const apiStore = useApiStore();
-
-const endpoint = `${apiStore.api}/etudiants`; // Remplacez par l'URL correcte
-
-export const getEtudiants = async () => {
+export const getEtudiants = async (endpoint: string) => {
     const response = await axios.get(endpoint);
     return response.data;
 };
 
-export const getEtudiantById = async (id: number) => {
+export const getEtudiantById = async (endpoint: string, id: number) => {
     const response = await axios.get(`${endpoint}/${id}`);
     return response.data;
 };
 
-export const createEtudiant = async (etudiant: Etudiant) => {
+export const createEtudiant = async (endpoint: string, etudiant: Etudiant) => {
     const response = await axios.post(endpoint, etudiant);
     return response.data;
 };
 
-export const updateEtudiant = async (id: number, etudiant: Etudiant) => {
+export const updateEtudiant = async (
+    endpoint: string,
+    id: number,
+    etudiant: Etudiant
+) => {
     const response = await axios.put(`${endpoint}/${id}`, etudiant);
     return response.data;
 };
 
-export const deleteEtudiant = async (id: number) => {
+export const deleteEtudiant = async (endpoint: string, id: number) => {
     const response = await axios.delete(`${endpoint}/${id}`);
     return response.data;
 };

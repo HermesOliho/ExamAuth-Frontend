@@ -1,33 +1,31 @@
-import { pinia } from "@/main";
 import type { Filiere } from "@/models";
-import { useApiStore } from "@/stores/apiStore";
 import axios from "axios";
 
-const apiStore = useApiStore(pinia);
-
-const endpoint = `${apiStore.api}/filieres`; // Remplacez par l'URL correcte
-
-export const getFilieres = async () => {
+export const getFilieres = async (endpoint: string) => {
     const response = await axios.get(endpoint);
     return response.data;
 };
 
-export const getFiliereById = async (id: number) => {
+export const getFiliereById = async (endpoint: string, id: number) => {
     const response = await axios.get(`${endpoint}/${id}`);
     return response.data;
 };
 
-export const createFiliere = async (filiere: Filiere) => {
+export const createFiliere = async (endpoint: string, filiere: Filiere) => {
     const response = await axios.post(endpoint, filiere);
     return response.data;
 };
 
-export const updateFiliere = async (id: number, filiere: Filiere) => {
+export const updateFiliere = async (
+    endpoint: string,
+    id: number,
+    filiere: Filiere
+) => {
     const response = await axios.put(`${endpoint}/${id}`, filiere);
     return response.data;
 };
 
-export const deleteFiliere = async (id: number) => {
+export const deleteFiliere = async (endpoint: string, id: number) => {
     const response = await axios.delete(`${endpoint}/${id}`);
     return response.data;
 };

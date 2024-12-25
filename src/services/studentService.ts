@@ -1,11 +1,4 @@
-import { pinia } from "@/main";
-import { useApiStore } from "@/stores/apiStore";
-
-const apiStore = useApiStore(pinia);
-
-const endpoint = `${apiStore.api}/etudiants`;
-
-export const getStudents = async () => {
+export const getStudents = async (endpoint: string) => {
     const r = await fetch(`${endpoint}`);
     if (r.ok) {
         return r.json();
@@ -13,7 +6,7 @@ export const getStudents = async () => {
     throw new Error("Impossible de contacter le serveur");
 };
 
-export const getStudentById = async (id: number) => {
+export const getStudentById = async (endpoint: string, id: number) => {
     const r = await fetch(`${endpoint}/${id}`);
     if (r.ok) {
         return r.json();
@@ -21,15 +14,18 @@ export const getStudentById = async (id: number) => {
     throw new Error("Impossible de contacter le serveur");
 };
 
-export const getStudentByMatricule = async (matricule: string) => {
-    const r = await fetch(`${apiStore.api}/etudiant/${matricule}/find`);
+export const getStudentByMatricule = async (
+    endpoint: string,
+    matricule: string
+) => {
+    const r = await fetch(`${endpoint}/etudiant/${matricule}/find`);
     if (r.ok) {
         return r.json();
     }
     throw new Error("Impossible de contacter le serveur");
 };
 
-export const deleteStudentById = async (id: number) => {
+export const deleteStudentById = async (endpoint: string, id: number) => {
     const r = await fetch(`${endpoint}/${id}`, { method: "DELETE" });
     if (r.ok) {
         return r.json();
@@ -37,7 +33,10 @@ export const deleteStudentById = async (id: number) => {
     throw new Error("Impossible de contacter le serveur");
 };
 
-export const getStudentByRegister = async (matricule: string) => {
+export const getStudentByRegister = async (
+    endpoint: string,
+    matricule: string
+) => {
     const r = await fetch(`${endpoint}/find/${matricule}`);
     if (r.ok) {
         return r.json();
@@ -45,9 +44,9 @@ export const getStudentByRegister = async (matricule: string) => {
     throw new Error("Impossible de contacter le serveur");
 };
 
-export const findStudent = async (matricule: string) => {
+export const findStudent = async (endpoint: string, matricule: string) => {
     const response = await fetch(
-        `${apiStore.api}/find-student?matricule=${matricule}`
+        `${endpoint}/find-student?matricule=${matricule}`
     );
     if (response.ok) {
         return response.json();

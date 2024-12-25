@@ -1,33 +1,34 @@
-import { apiUrl } from "@/api/infos";
 import type { FraisAcademiques } from "@/models";
 import axios from "axios";
 
-const API_URL = `${apiUrl}/frais-academiques`; // Remplacez par l'URL correcte
-
-export const getFraisAcademiques = async () => {
-    const response = await axios.get(API_URL);
+export const getFraisAcademiques = async (endpoint: string) => {
+    const response = await axios.get(endpoint);
     return response.data;
 };
 
-export const getFraisAcademiqueById = async (id: number) => {
-    const response = await axios.get(`${API_URL}/${id}`);
+export const getFraisAcademiqueById = async (endpoint: string, id: number) => {
+    const response = await axios.get(`${endpoint}/${id}`);
     return response.data;
 };
 
-export const createFraisAcademique = async (paiement: FraisAcademiques) => {
-    const response = await axios.post(API_URL, paiement);
+export const createFraisAcademique = async (
+    endpoint: string,
+    paiement: FraisAcademiques
+) => {
+    const response = await axios.post(endpoint, paiement);
     return response.data;
 };
 
 export const updateFraisAcademique = async (
+    endpoint: string,
     id: number,
     paiement: FraisAcademiques
 ) => {
-    const response = await axios.put(`${API_URL}/${id}`, paiement);
+    const response = await axios.put(`${endpoint}/${id}`, paiement);
     return response.data;
 };
 
-export const deleteFraisAcademiques = async (id: number) => {
-    const response = await axios.delete(`${API_URL}/${id}`);
+export const deleteFraisAcademiques = async (endpoint: string, id: number) => {
+    const response = await axios.delete(`${endpoint}/${id}`);
     return response.data;
 };

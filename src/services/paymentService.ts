@@ -1,33 +1,29 @@
-import { apiUrl } from "@/api/infos";
-
-const apiEndPoint = `${apiUrl}/payments`;
-
-export const getPayments = async () => {
-    const r = await fetch(`${apiEndPoint}`);
+export const getPayments = async (endpoint: string) => {
+    const r = await fetch(`${endpoint}`);
     if (r.ok) {
         return r.json();
     }
     throw new Error("Impossible de contacter le serveur");
 };
 
-export const getPaymentById = async (id: number) => {
-    const r = await fetch(`${apiEndPoint}/${id}`);
+export const getPaymentById = async (endpoint: string, id: number) => {
+    const r = await fetch(`${endpoint}/${id}`);
     if (r.ok) {
         return r.json();
     }
     throw new Error("Impossible de contacter le serveur");
 };
 
-export const getPaymentsByUserId = async (id: number) => {
-    const r = await fetch(`${apiUrl}/students/${id}/payments`);
+export const getPaymentsByUserId = async (endpoint: string, id: number) => {
+    const r = await fetch(`${endpoint}/students/${id}/payments`);
     if (r.ok) {
         return r.json();
     }
     throw new Error("Impossible de contacter le serveur");
 };
 
-export const addPayment = async (data: any) => {
-    const r = await fetch(`${apiEndPoint}`, {
+export const addPayment = async (endpoint: string, data: any) => {
+    const r = await fetch(`${endpoint}`, {
         method: "POST",
         body: JSON.stringify(data),
     });
