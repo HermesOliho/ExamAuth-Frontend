@@ -40,10 +40,9 @@
 </template>
 
 <script setup lang="ts">
-import { apiUrl, studentsEndpoint } from "@/api/infos";
 import QRCodeGenerator from "@/components/QRCodeGenerator.vue";
 import { formatDate, formatLiteral } from "@/functions/string";
-import type { Exam, Etudiant } from "@/models";
+import type { Etudiant, Exam } from "@/models";
 import { getStudentByMatricule } from "@/services/studentService";
 import { useApiStore } from "@/stores/apiStore";
 import { useAuthenticationStore } from "@/stores/authStore";
