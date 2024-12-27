@@ -26,6 +26,7 @@ import { ref } from "vue";
 
 const apiStore = useApiStore();
 const serverAddress = ref(apiStore.server);
+console.log(apiStore.api);
 
 const changeServerAddress = () => {
     if (serverAddress.value) {

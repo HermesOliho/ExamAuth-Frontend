@@ -12,9 +12,9 @@
             <tr v-for="inscription in promotion.inscriptions">
                 <td>Le {{ formatDate(inscription.created_at as string) }}</td>
                 <td>
-                    {{ inscription.etudiant.nom }}
-                    {{ inscription.etudiant.post_nom }}
-                    {{ inscription.etudiant.prenom ?? "" }}
+                    {{ inscription.etudiant?.nom }}
+                    {{ inscription.etudiant?.post_nom }}
+                    {{ inscription.etudiant?.prenom ?? "" }}
                 </td>
                 <td style="text-align: end" class="table-actions">
                     <RouterLink
@@ -27,7 +27,7 @@
                         class="secondary"
                         @click="
                             removeEtudiant(
-                                inscription.etudiant.id_etudiant as number
+                                inscription.etudiant_id_etudiant as number
                             )
                         "
                     >
@@ -169,8 +169,9 @@ const imageEtudiant = ref<any>("");
 
 onMounted(async () => {
     const id = Number(route.params.id);
-    promotion.value = await getPromotionById(id);
+    promotion.value = await getPromotionById(`${apiStore.api}/promotions`, id);
     console.log(promotion.value);
+    console.log(promotion.value?.inscriptions);
 });
 
 const submit = async () => {
@@ -182,6 +183,7 @@ const submit = async () => {
         try {
             await axios.post(`${apiStore.api}/etudiants`, data);
             promotion.value = await getPromotionById(
+                `${apiStore.api}/promotions`,
                 promotion.value?.id_promotion as number
             );
             form.reset();
@@ -197,7 +199,7 @@ const chargerImage = (event: Event) => {
 };
 
 const removeEtudiant = async (id: number) => {
-    const result = await deleteEtudiant(id);
+    const result = await deleteEtudiant(`${apiStore.api}/etudiants`, id);
     router.push({ name: "liste_promotions" });
 };
 </script>

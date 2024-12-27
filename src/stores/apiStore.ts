@@ -8,7 +8,7 @@ export const useApiStore = defineStore(
         const apiUrl = ref(`${serverUrl.value}/api`);
         const setServer = (newUrl: string) => {
             serverUrl.value = newUrl;
-            // apiUrl.value = `${newUrl}/api`;
+            apiUrl.value = `${newUrl}/api`;
         };
         return {
             server: serverUrl,

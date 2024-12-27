@@ -16,7 +16,7 @@
         <thead>
             <tr>
                 <th scope="col">Étudiant</th>
-                <th scope="col">Délai</th>
+                <th scope="col">Délai/Motif</th>
                 <th scope="col" style="text-align: end">Actions</th>
             </tr>
         </thead>
@@ -31,13 +31,23 @@
                     </p>
                 </td>
                 <td>
-                    Du {{ formatDate(derogation.date_debut) }} au
-                    {{ formatDate(derogation.date_fin) }}
+                    <p>
+                        Du
+                        <strong>{{ formatDate(derogation.date_debut) }}</strong>
+                        au
+                        <strong>{{ formatDate(derogation.date_fin) }}</strong>
+                        <br />
+                        <span style="font-size: 0.8em">
+                            -- {{ derogation.motif }}
+                        </span>
+                    </p>
                 </td>
-                <td class="table-actions">
-                    <button @click="removeDerogation(derogation.id)">
-                        Supprimer
-                    </button>
+                <td>
+                    <div class="table-actions">
+                        <button @click="removeDerogation(derogation.id)">
+                            Supprimer
+                        </button>
+                    </div>
                 </td>
             </tr>
         </tbody>

@@ -24,7 +24,11 @@
             <tr v-for="paiement in paiements">
                 <td>
                     <p>
-                        {{ formatDate(paiement.date_paiement) }} par
+                        Le
+                        <strong>{{
+                            formatDate(paiement.date_paiement)
+                        }}</strong>
+                        par
                         <strong>
                             {{ paiement.etudiant?.nom }}
                             {{ paiement.etudiant?.post_nom }}
@@ -32,10 +36,12 @@
                     </p>
                 </td>
                 <td>{{ paiement.num_bordereau }}</td>
-                <td class="table-actions">
-                    <button @click="removePaiement(paiement.id_paiement)">
-                        Supprimer
-                    </button>
+                <td>
+                    <div class="table-actions">
+                        <button @click="removePaiement(paiement.id_paiement)">
+                            Supprimer
+                        </button>
+                    </div>
                 </td>
             </tr>
         </tbody>
