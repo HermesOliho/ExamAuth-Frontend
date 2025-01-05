@@ -19,16 +19,32 @@ export const ucwords = (
 };
 
 /**
+ * Formatte un nombre dans un format plus lisible aux humains
+ * @param nbr
+ * @returns {string}
+ */
+export const formatNumber = (nbr: number) => {
+    if (nbr > -10 && nbr < 10)
+        return `${Math.sign(nbr) === -1 ? "-" : ""}0${nbr}`;
+    // if (nbr > -10 && nbr < 0) return Math.si
+    return `${nbr}`;
+};
+
+/**
  * Formatte une date au format JJ/MM/AAAA
  * @param date La date à formater
  * @param dateText
  * @returns
  */
-export const formatDate = (date: Date | string) => {
+export const formatDate = (date: Date | string, withYear: boolean = true) => {
     if (typeof date === "string") {
         date = new Date(date);
     }
-    return `${date?.getDate()}/${date?.getMonth()}/${date?.getFullYear()}`;
+    const day = formatNumber(date.getDate());
+    const month = formatNumber(date.getMonth());
+    const fullYear = date.getFullYear();
+    if (withYear) return `${day}/${month}/${fullYear}`;
+    else return `${day}/${month}`;
 };
 
 /**

@@ -28,6 +28,11 @@
                         </RouterLink>
                     </li>
                     <li>
+                        <RouterLink :to="{ name: 'liste_frais' }">
+                            Frais
+                        </RouterLink>
+                    </li>
+                    <li>
                         <RouterLink :to="{ name: 'liste_etudiants' }">
                             Etudiants
                         </RouterLink>

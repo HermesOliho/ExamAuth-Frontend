@@ -1,7 +1,7 @@
 <template>
     <div>
         <img
-            :src="`${apiStore.server}/storage/${student.image_url}`"
+            :src="`${apiStore.server}${student.image_url}`"
             alt="#photo"
             style="
                 display: block;
@@ -30,7 +30,7 @@
                     <td class="fw-bold">{{ student.matricule }}</td>
                 </tr>
                 <tr class="">
-                    <td>Nom :</td>
+                    <td>Nom complet :</td>
                     <td class="fw-bold">
                         {{ student.nom }}
                         {{ student.post_nom }}
@@ -43,14 +43,6 @@
                         {{ formatDate(new Date(student.date_naissance)) }}
                     </td>
                 </tr>
-                <!-- <tr class="">
-                    <td>Numéro de téléphone :</td>
-                    <td class="fw-bold">{{ student.phone }}</td>
-                </tr>
-                <tr class="">
-                    <td>Adresse e-mail :</td>
-                    <td class="fw-bold">{{ student.email }}</td>
-                </tr> -->
                 <tr class="">
                     <td>Promotion :</td>
                     <td class="fw-bold">{{ student.promotion }}</td>

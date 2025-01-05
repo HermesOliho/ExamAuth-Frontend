@@ -30,22 +30,24 @@
                             {{ domaine.nom_domaine }}
                         </span>
                     </td>
-                    <td style="text-align: end" class="table-actions">
-                        <router-link
-                            role="button"
-                            :to="{
-                                name: 'modifier_domaine',
-                                params: { id: domaine.id_domaine },
-                            }"
-                        >
-                            <button>Editer</button>
-                        </router-link>
-                        <button
-                            class="secondary"
-                            @click="removeDomaine(domaine.id_domaine)"
-                        >
-                            Supprimer
-                        </button>
+                    <td style="text-align: end">
+                        <div class="table-actions">
+                            <router-link
+                                role="button"
+                                :to="{
+                                    name: 'modifier_domaine',
+                                    params: { id: domaine.id_domaine },
+                                }"
+                            >
+                                <button>Editer</button>
+                            </router-link>
+                            <button
+                                class="secondary"
+                                @click="removeDomaine(domaine.id_domaine)"
+                            >
+                                Supprimer
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </tbody>

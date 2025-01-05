@@ -11,6 +11,8 @@ import ShowEtudiant from "@/views/manager/etudiants/ShowEtudiant.vue";
 import EditFiliere from "@/views/manager/filieres/EditFiliere.vue";
 import ListFilieres from "@/views/manager/filieres/ListFilieres.vue";
 import ShowFiliere from "@/views/manager/filieres/ShowFiliere.vue";
+import AssignerPromotion from "@/views/manager/frais-academiques/AssignerPromotion.vue";
+import ListeFrais from "@/views/manager/frais-academiques/ListeFrais.vue";
 import EditMention from "@/views/manager/mentions/EditMention.vue";
 import ListMentions from "@/views/manager/mentions/ListMentions.vue";
 import ShowMention from "@/views/manager/mentions/ShowMention.vue";
@@ -62,6 +64,7 @@ const router = createRouter({
             meta: { requiresAuth: true },
             component: Manager,
             children: [
+                // Domaines
                 {
                     path: "domaines",
                     name: "liste_domaines",
@@ -145,27 +148,6 @@ const router = createRouter({
                     name: "voir_promotion",
                     component: ShowPromotion,
                 },
-                // Mentions
-                {
-                    path: "mentions",
-                    name: "liste_mentions",
-                    component: ListMentions,
-                },
-                {
-                    path: "mentions/create",
-                    name: "ajouter_mention",
-                    component: EditMention,
-                },
-                {
-                    path: "mentions/edit/:id",
-                    name: "modifier_mention",
-                    component: EditMention,
-                },
-                {
-                    path: "mentions/:id",
-                    name: "voir_mention",
-                    component: ShowMention,
-                },
                 // Etudiants
                 {
                     path: "etudiants",
@@ -209,13 +191,17 @@ const router = createRouter({
                     name: "liste_derogations",
                     component: ListDerogations,
                 },
-
-                // Page d'accueil
-                // {
-                //     path: "",
-                //     name: "no_path",
-                //     redirect: { name: "all_students" },
-                // },
+                // Frais académiques
+                {
+                    path: "frais-academiques",
+                    name: "liste_frais",
+                    component: ListeFrais,
+                },
+                {
+                    path: "frais-academiques/:id_tranche/to-promotion",
+                    name: "frais_to_promotion",
+                    component: AssignerPromotion,
+                },
             ],
         },
     ],

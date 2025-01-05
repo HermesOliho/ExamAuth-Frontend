@@ -1,6 +1,6 @@
 <template>
     <form action="" @submit.prevent="submit">
-        <h4 style="text-align: center">Connexion en tant qu'administrateur</h4>
+        <h4 style="text-align: center">Gestionnaire du site</h4>
         <label for="email">
             <span>Adresse e-mail</span>
             <input

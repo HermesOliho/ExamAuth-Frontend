@@ -128,9 +128,8 @@ onMounted(() => {
                 <!-- Champs gestionnaire -->
                 <template v-if="chosenProfile === 'user'">
                     <p style="text-align: center; color: gray">
-                        Ce profil concerne le gestionnaire de campus, le
-                        surveillant ou tout autre personne autorisée à scanner
-                        une carte d'étudiant
+                        Ce profil concerne le surveillant ou tout autre personne
+                        autorisée à scanner une carte d'étudiant
                     </p>
                     <hr style="margin-block: 1rem" />
                     <TextField
@@ -156,47 +155,6 @@ onMounted(() => {
                         id="matriculeField"
                         required
                     />
-                    <!-- Séparateur -->
-                    <!-- <div
-                        class="mb-3 position-relative d-flex align-items-center"
-                        style="height: 20px"
-                    >
-                        <hr style="display: block; width: 100%" />
-                        <p
-                            class="bg-white text-center px-2"
-                            style="
-                                position: absolute;
-                                top: 50%;
-                                left: 50%;
-                                transform: translateX(-50%) translateY(-50%);
-                                height: inherit;
-                            "
-                        >
-                            OU
-                        </p>
-                    </div> -->
-                    <!-- Nom post-nom et promotion -->
-                    <!-- <div class="row row-cols">
-                        <div class="col">
-                            <TextField
-                                v-model="userCredentials.first_name"
-                                label="Nom"
-                                id="firstName"
-                            />
-                        </div>
-                        <div class="col">
-                            <TextField
-                                v-model="userCredentials.last_name"
-                                label="Post-nom"
-                                id="lastName"
-                            />
-                        </div>
-                    </div>
-                    <TextField
-                        v-model="userCredentials.promotion"
-                        label="Promotion"
-                        id="promotion"
-                    /> -->
                 </template>
                 <button type="submit" class="btn btn-primary d-block w-100">
                     S'identifier
@@ -211,7 +169,7 @@ onMounted(() => {
                     "
                     style="text-align: center"
                 >
-                    Connexion en tant qu'administrateur
+                    Connexion en tant que Gestionnaire de site
                 </a>
             </form>
             <AdminLogin @login="adminLogin" v-else>

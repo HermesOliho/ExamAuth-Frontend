@@ -16,12 +16,15 @@
             <button type="submit" class="btn btn-primary">Rechercher</button>
         </div>
     </form>
-    <section
-        v-if="status === 'loaded'"
-        class="d-flex justify-content-center p-2"
-        style="display: flex; justify-content: center; padding: 0.5rem"
-    >
-        <QRCodeGenerator :qr-value="qrCodeData" :size="300" />
+    <section v-if="status === 'loaded' && student" class="student-card-section">
+        <div style="display: flex; justify-content: end">
+            <button @click="downloadCard()">Télécharger la carte</button>
+        </div>
+        <StudentCard
+            :student="student"
+            reference="std-card-ref"
+            @mount="handleCardGenerated"
+        />
     </section>
     <div
         v-else-if="status === 'pending' || status === 'exams'"
@@ -40,30 +43,48 @@
 </template>
 
 <script setup lang="ts">
-import QRCodeGenerator from "@/components/QRCodeGenerator.vue";
-import { formatDate, formatLiteral } from "@/functions/string";
+import StudentCard from "@/components/StudentCard.vue";
+import { formatNumber } from "@/functions/string";
 import type { Etudiant, Exam } from "@/models";
 import { getStudentByMatricule } from "@/services/studentService";
 import { useApiStore } from "@/stores/apiStore";
 import { useAuthenticationStore } from "@/stores/authStore";
+import download from "downloadjs";
+import * as htmlToImage from "html-to-image";
 import type { Ref } from "vue";
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref, useTemplateRef } from "vue";
 import { useRoute } from "vue-router";
 
 const matricule = ref("");
 const status: Ref<"no_action" | "pending" | "exams" | "loaded" | "not_found"> =
     ref("no_action");
 const student: Ref<Etudiant | null> = ref(null);
-const exams: Ref<Exam[] | null> = ref(null);
 const route = useRoute();
 const authStore = useAuthenticationStore();
-const qrCodeData = ref("");
 const apiStore = useApiStore();
+const studentCardRef = ref();
 
-const buildqrData = () => {
-    qrCodeData.value = "";
-    if (student.value) {
-        qrCodeData.value = formatLiteral(student.value);
+const handleCardGenerated = (value: object) => {
+    studentCardRef.value = value;
+};
+
+const downloadCard = () => {
+    // const element = document.getElementById("studentCard");
+    if (studentCardRef.value) {
+        htmlToImage
+            .toPng(studentCardRef.value)
+            .then((dataUrl) => {
+                const date = new Date();
+                const prefix =
+                    `${date.getFullYear()}-${formatNumber(
+                        date.getMonth() + 1
+                    )}-${date.getDate()}` +
+                    `_${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+                download(dataUrl, `Carte d'étudiant-${prefix}.png`);
+            })
+            .catch((error) => {
+                console.error("Impossible de télécharger la carte : ", error);
+            });
     }
 };
 
@@ -75,7 +96,6 @@ const submit = async () => {
             matricule.value
         );
         if (student.value) {
-            buildqrData();
             status.value = "loaded";
         } else {
             status.value = "not_found";
@@ -86,15 +106,6 @@ const submit = async () => {
     }
 };
 
-const visibleExams = computed(() =>
-    exams.value?.map(
-        (ex) =>
-            `${ex.course}, le ${formatDate(new Date(ex.exam_date))} / ${
-                ex.room
-            }`
-    )
-);
-
 onMounted(() => {
     console.log(route.params);
     if (authStore.matricule) {
@@ -103,3 +114,14 @@ onMounted(() => {
     }
 });
 </script>
+
+<style>
+.student-card-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    gap: 2rem;
+}
+</style>

@@ -8,8 +8,8 @@ export default defineConfig({
     server: {
         host: "0.0.0.0",
         https: {
-            key: "/media/hermes/Projets/Projets/Laravel/ExamAuth-Backend/ssl/localhost+2-key.pem",
-            cert: "/media/hermes/Projets/Projets/Laravel/ExamAuth-Backend/ssl/localhost+2.pem",
+            key: "/media/hermes/Projets/Projets/Projets tutorés/ExamAuth/ExamAuth-Frontend/ssl/localhost-key.pem",
+            cert: "/media/hermes/Projets/Projets/Projets tutorés/ExamAuth/ExamAuth-Frontend/ssl/localhost.pem",
             // key: "/etc/ssl/mkcert/localhost+3-key.pem",
             // cert: "/etc/ssl/mkcert/localhost+3.pem",
         },
