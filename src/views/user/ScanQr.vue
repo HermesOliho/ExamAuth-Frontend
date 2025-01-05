@@ -15,6 +15,12 @@
                 <div class="col" style="padding: 1rem">
                     <StudentInfosTable :student="etudiant" v-if="etudiant" />
                 </div>
+                <div>
+                    <PayInfosTable :paiements="paiements" />
+                </div>
+                <div>
+                    <DerogationsTable :derogations="derogations" />
+                </div>
             </div>
         </template>
         <div v-else>
@@ -30,6 +36,7 @@
 </template>
 
 <script setup lang="ts">
+import DerogationsTable from "@/components/DerogationsTable.vue";
 import PayInfosTable from "@/components/PayInfosTable.vue";
 import StudentInfosTable from "@/components/StudentInfosTable.vue";
 import type { Etudiant, Paiement } from "@/models";
@@ -44,7 +51,7 @@ const studentInfos = ref<Partial<Etudiant> | null>(null);
 const isScanning = ref(true);
 const etudiant = ref<Etudiant | null>(null);
 const paiements = ref<Paiement[]>([]);
-const exams = ref([]);
+const derogations = ref([]);
 const apiStore = useApiStore();
 
 // Lorsque un code QR est détecté
@@ -90,27 +97,16 @@ watch(etudiant, async () => {
         etudiant.value.id_etudiant > 0
     ) {
         const studentPayments = await getPaiementsByEtudiantId(
-            `${apiStore.api}/paiements`,
+            `${apiStore.api}`,
             etudiant.value.id_etudiant ?? 0
         );
         paiements.value = studentPayments;
-        const studentExams = await getDerogationsByEtudiantId(
-            `${apiStore.api}/derogations`,
+        const studentDerogations = await getDerogationsByEtudiantId(
+            `${apiStore.api}`,
             etudiant.value.id_etudiant ?? 0
         );
-        exams.value = studentExams;
+        derogations.value = studentDerogations;
+        console.log(paiements.value, derogations.value);
     }
 });
-
-// onMounted(() => {
-//     console.log("Mounted !");
-//     navigator.mediaDevices
-//         .getUserMedia({ video: true })
-//         .then((stream) => {
-//             console.log(stream);
-//             console.log("Caméra OK!");
-//             alert("Caméra OK!");
-//         })
-//         .catch((error) => console.log("Problème de caméra"));
-// });
 </script>

@@ -6,7 +6,7 @@
                 <tr>
                     <th scope="col">Date</th>
                     <th scope="col" class="text-end">Montant</th>
-                    <th scope="col">Référence</th>
+                    <th scope="col">N° bordereau</th>
                 </tr>
             </thead>
             <tbody>
@@ -14,7 +14,12 @@
                     v-for="paiement in paiements"
                     :key="paiement.id_paiement + '_' + paiement.date_paiement"
                 >
-                    <td>Le {{ formatDate(paiement.date_paiement) }}</td>
+                    <td>
+                        Le
+                        <strong>{{
+                            formatDate(paiement.date_paiement)
+                        }}</strong>
+                    </td>
                     <td class="text-end">{{ paiement.montant }} $</td>
                     <td>{{ paiement.num_bordereau }}</td>
                 </tr>
