@@ -51,6 +51,32 @@
                     <td>Année académique :</td>
                     <td class="fw-bold">{{ student.annee_academique }}</td>
                 </tr>
+                <tr class="">
+                    <td>Solde</td>
+                    <td class="fw-bold">
+                        <strong>{{ student.solde_paiment }}$</strong>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td>Frais de la promotion</td>
+                    <td class="fw-bold">
+                        <ul>
+                            <li v-for="frais in student.frais_promotion">
+                                <span>{{ frais.semestre }} : </span>
+                                <strong>{{ frais.montant }}$</strong>
+                                <sub
+                                    >à payer le
+                                    {{
+                                        formatDate(
+                                            frais.echeance_paiement,
+                                            false
+                                        )
+                                    }}</sub
+                                >
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

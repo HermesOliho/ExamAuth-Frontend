@@ -54,6 +54,10 @@ export interface Etudiant {
     inscriptions?: Inscription[];
     derogations?: Derogation[];
     paiements?: Paiement[];
+    frais_promotion?: FraisAcademiques[];
+    total_frais?: number;
+    total_paiements?: number;
+    solde_paiment?: number;
 }
 
 export interface Inscription {

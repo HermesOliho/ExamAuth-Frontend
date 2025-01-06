@@ -41,7 +41,7 @@ export const formatDate = (date: Date | string, withYear: boolean = true) => {
         date = new Date(date);
     }
     const day = formatNumber(date.getDate());
-    const month = formatNumber(date.getMonth());
+    const month = formatNumber(date.getMonth() + 1);
     const fullYear = date.getFullYear();
     if (withYear) return `${day}/${month}/${fullYear}`;
     else return `${day}/${month}`;

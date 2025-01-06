@@ -1,5 +1,16 @@
 <template>
-    <h1>Frais académiques</h1>
+    <div
+        style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        "
+    >
+        <h1>Frais académiques</h1>
+        <RouterLink :to="{ name: 'ajouter_frais' }" role="button">
+            Ajouter des frais
+        </RouterLink>
+    </div>
     <hr />
     <!-- Recherche -->
     <form role="search">
@@ -25,7 +36,7 @@
             <tr v-for="frais in fraisVisibles">
                 <td>{{ frais.montant }} $</td>
                 <td>{{ frais.semestre }}</td>
-                <td>Le {{ formatDate(frais.echeance_paiement) }}</td>
+                <td>Le {{ formatDate(frais.echeance_paiement, false) }}</td>
                 <td>
                     <div class="table-actions">
                         <RouterLink
@@ -38,7 +49,12 @@
                         >
                             Assigner
                         </RouterLink>
-                        <button class="secondary">Supprimer</button>
+                        <button
+                            class="secondary"
+                            @click="supprimerFrais(frais.id_tranche)"
+                        >
+                            Supprimer
+                        </button>
                     </div>
                 </td>
             </tr>
@@ -50,7 +66,10 @@
 <script setup lang="ts">
 import { formatDate } from "@/functions/string";
 import type { FraisAcademiques } from "@/models";
-import { getFraisAcademiques } from "@/services/fraisAcademiqueService";
+import {
+    deleteFraisAcademiques,
+    getFraisAcademiques,
+} from "@/services/fraisAcademiqueService";
 import { useApiStore } from "@/stores/apiStore";
 import { computed, onMounted, ref } from "vue";
 
@@ -68,10 +87,23 @@ const fraisVisibles = computed(() => {
     });
 });
 
-onMounted(async () => {
+const chargerFrais = async () => {
     frais_academiques.value = await getFraisAcademiques(
         `${apiStore.api}/frais-academiques`
     );
-    console.log(frais_academiques.value);
+};
+
+const supprimerFrais = (id: number) => {
+    if (confirm("Voulez-vous vrais supprimer ces frais académiques ?")) {
+        deleteFraisAcademiques(`${apiStore.api}/frais-academiques`, id).then(
+            () => {
+                chargerFrais();
+            }
+        );
+    }
+};
+
+onMounted(() => {
+    chargerFrais();
 });
 </script>

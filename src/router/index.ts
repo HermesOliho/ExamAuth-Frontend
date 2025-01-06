@@ -11,6 +11,7 @@ import ShowEtudiant from "@/views/manager/etudiants/ShowEtudiant.vue";
 import EditFiliere from "@/views/manager/filieres/EditFiliere.vue";
 import ListFilieres from "@/views/manager/filieres/ListFilieres.vue";
 import ShowFiliere from "@/views/manager/filieres/ShowFiliere.vue";
+import AjouterFrais from "@/views/manager/frais-academiques/AjouterFrais.vue";
 import AssignerPromotion from "@/views/manager/frais-academiques/AssignerPromotion.vue";
 import ListeFrais from "@/views/manager/frais-academiques/ListeFrais.vue";
 import EditMention from "@/views/manager/mentions/EditMention.vue";
@@ -196,6 +197,11 @@ const router = createRouter({
                     path: "frais-academiques",
                     name: "liste_frais",
                     component: ListeFrais,
+                },
+                {
+                    path: "add-frais-academiques",
+                    name: "ajouter_frais",
+                    component: AjouterFrais,
                 },
                 {
                     path: "frais-academiques/:id_tranche/to-promotion",
