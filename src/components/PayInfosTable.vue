@@ -1,58 +1,54 @@
 <template>
-    <h3 class="text-center">Paiements</h3>
+    <h3><a href="#">Paiements</a></h3>
     <div class="table-responsive mb-3">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col" class="text-end">Montant</th>
-                    <th scope="col">N° bordereau</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr
-                    v-for="paiement in paiements"
-                    :key="paiement.id_paiement + '_' + paiement.date_paiement"
-                >
-                    <td>
-                        Le
-                        <strong>{{
-                            formatDate(paiement.date_paiement)
-                        }}</strong>
-                    </td>
-                    <td class="text-end">{{ paiement.montant }} $</td>
-                    <td>{{ paiement.num_bordereau }}</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td scope="row" class="fw-bold">Total</td>
-                    <td class="fw-bold text-end">{{ totalPayment }} $</td>
-                    <td colspan="3"></td>
-                </tr>
-            </tfoot>
-        </table>
+        <!-- Infos générales -->
+        <ul>
+            <li>
+                Total payé : <strong>{{ etudiant.total_paiement }} $</strong>
+            </li>
+            <li>
+                Total frais : <strong>{{ etudiant.total_frais }} $</strong>
+            </li>
+            <li>
+                Solde restant : <strong>{{ etudiant.solde_paiment }} $</strong>
+            </li>
+        </ul>
+        <hr />
+        <!-- Paiements -->
+        <h4>Détails paiements</h4>
+        <ul>
+            <li v-for="paiement in etudiant.paiements">
+                Date de paiement
+                <strong>{{ formatDate(paiement.date_paiement) }}</strong
+                ><br />
+                Montant payé : <strong>{{ paiement.montant }}$</strong><br />
+                <em>Numéro bordereau</em> :
+                <em>{{ paiement.num_bordereau }}</em>
+            </li>
+        </ul>
+        <hr />
+        <!-- Frais académiques -->
+        <h4>Détails frais académique</h4>
+        <ul>
+            <li v-for="frais in etudiant.frais_promotion">
+                {{ frais.semestre }} : <strong>{{ frais.montant }}$</strong>
+                <sub>
+                    Au plus tard le
+                    <strong>{{
+                        formatDate(frais.echeance_paiement, false)
+                    }}</strong>
+                </sub>
+            </li>
+        </ul>
+        <hr />
     </div>
 </template>
 
 <script setup lang="ts">
 import { formatDate } from "@/functions/string";
-import type { Paiement } from "@/models";
-import { computed } from "vue";
-import { onMounted } from "vue";
+import type { Etudiant } from "@/models";
 
 const props = defineProps<{
-    paiements: Paiement[];
+    etudiant: Etudiant;
 }>();
-
-const totalPayment = computed(() => {
-    let totalValue = 0;
-    for (const paiement of props.paiements) {
-        totalValue += paiement.montant;
-    }
-    return totalValue.toFixed(2);
-});
-onMounted(() => {
-    console.log(props.paiements);
-});
 </script>

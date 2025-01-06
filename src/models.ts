@@ -56,7 +56,7 @@ export interface Etudiant {
     paiements?: Paiement[];
     frais_promotion?: FraisAcademiques[];
     total_frais?: number;
-    total_paiements?: number;
+    total_paiement?: number;
     solde_paiment?: number;
 }
 

@@ -16,69 +16,30 @@
             "
         />
     </div>
+    <h2 class="text-center">Identité</h2>
     <div class="table-responsive">
-        <table class="table">
-            <!-- <thead>
-                <tr>
-                    <th scope="col"><h3>Information</h3></th>
-                    <th scope="col"><h3>Valeur</h3></th>
-                </tr>
-            </thead> -->
-            <tbody>
-                <tr class="">
-                    <td>Matricule :</td>
-                    <td class="fw-bold">{{ student.matricule }}</td>
-                </tr>
-                <tr class="">
-                    <td>Nom complet :</td>
-                    <td class="fw-bold">
-                        {{ student.nom }}
-                        {{ student.post_nom }}
-                    </td>
-                </tr>
-                <tr class="">
-                    <td>Date de naissance :</td>
-                    <td class="fw-bold">
-                        Le
-                        {{ formatDate(new Date(student.date_naissance)) }}
-                    </td>
-                </tr>
-                <tr class="">
-                    <td>Promotion :</td>
-                    <td class="fw-bold">{{ student.promotion }}</td>
-                </tr>
-                <tr class="">
-                    <td>Année académique :</td>
-                    <td class="fw-bold">{{ student.annee_academique }}</td>
-                </tr>
-                <tr class="">
-                    <td>Solde</td>
-                    <td class="fw-bold">
-                        <strong>{{ student.solde_paiment }}$</strong>
-                    </td>
-                </tr>
-                <tr class="">
-                    <td>Frais de la promotion</td>
-                    <td class="fw-bold">
-                        <ul>
-                            <li v-for="frais in student.frais_promotion">
-                                <span>{{ frais.semestre }} : </span>
-                                <strong>{{ frais.montant }}$</strong>
-                                <sub
-                                    >à payer le
-                                    {{
-                                        formatDate(
-                                            frais.echeance_paiement,
-                                            false
-                                        )
-                                    }}</sub
-                                >
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <ul>
+            <li>
+                Matricule : <strong>{{ student.matricule }}</strong>
+            </li>
+            <li>
+                Nom complet :
+                <strong>{{ student.nom }} {{ student.post_nom }}</strong>
+            </li>
+            <li>
+                Date de naissance :
+                <strong>{{
+                    formatDate(new Date(student.date_naissance))
+                }}</strong>
+            </li>
+            <li>
+                Promotion : <strong>{{ student.promotion }}</strong>
+            </li>
+            <li>
+                Année académique :
+                <strong>{{ student.annee_academique }}</strong>
+            </li>
+        </ul>
     </div>
 </template>
 

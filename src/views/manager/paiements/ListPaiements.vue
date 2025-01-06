@@ -16,6 +16,7 @@
         <thead>
             <tr>
                 <th scope="col">Date/Etudiant</th>
+                <th scope="col">Montant</th>
                 <th scope="col">N° bordereau</th>
                 <th scope="col" style="text-align: end">Actions</th>
             </tr>
@@ -35,6 +36,7 @@
                         </strong>
                     </p>
                 </td>
+                <td>{{ paiement.montant }}$</td>
                 <td>{{ paiement.num_bordereau }}</td>
                 <td>
                     <div class="table-actions">

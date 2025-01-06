@@ -16,7 +16,7 @@
                     <StudentInfosTable :student="etudiant" v-if="etudiant" />
                 </div>
                 <div>
-                    <PayInfosTable :paiements="paiements" />
+                    <PayInfosTable v-if="etudiant" :etudiant="etudiant" />
                 </div>
                 <div>
                     <DerogationsTable :derogations="derogations" />
